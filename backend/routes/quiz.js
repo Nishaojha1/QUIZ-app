@@ -8,14 +8,14 @@ const { body, validationResult } = require("express-validator");
 router.get("/fetchallquiz", fetchuser, async (req, res) => {
     try {
       const quizs = await Quiz.find({ user: req.user.id });
-      res.json(notes);
+      res.json(quizs);
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Internal Server Error");
     }
   });
 
-// ROUTE 2 : Add a new note using : POST "/api/notes/addquiz" .Login required
+// ROUTE 2 : Add a new quiz using : POST "/api/quizs/addquiz" .Login required
 router.post(
   "/addquiz",
   fetchuser,
@@ -47,7 +47,7 @@ router.post(
         user: req.user.id,
       });
       const savedQuiz = await quiz.save();
-      // to send the saved note in the response
+      // to send the saved quiz in the response
       res.json(savedQuiz);
     } catch (error) {
       console.error(error.message);
@@ -59,7 +59,7 @@ router.post(
 // ROUTE 3 : Update an existing quiz using : PUT "/api/quiz/updatequiz/:id" .Login required
 router.put("/updatequiz/:id", fetchuser, async (req, res) => {
   const { question, option1, option2, option3, option4, answer } = req.body;
-  //Create a new note object
+  //Create a new quiz object
   const newQuiz = {};
   if (question) {
     newQuiz.question = question;
@@ -80,7 +80,7 @@ router.put("/updatequiz/:id", fetchuser, async (req, res) => {
     newQuiz.answer = answer;
   }
 
-  //Find the note to be updated and update it
+  //Find the quiz to be updated and update it
   try {
     var quiz = await Quiz.findById(req.params.id);
     if (!quiz) {
@@ -101,21 +101,21 @@ router.put("/updatequiz/:id", fetchuser, async (req, res) => {
   }
 });
 
-// ROUTE 4 : Delete an existing note using : DELETE "/api/notes/deletenote/:id" .Login required
+// ROUTE 4 : Delete an existing quiz using : DELETE "/api/quizs/deletequiz/:id" .Login required
 router.delete("/deletequiz/:id", fetchuser, async (req, res) => {
-  //Find the note to be deleted and delete it
+  //Find the quiz to be deleted and delete it
   try {
     let quiz = await Quiz.findById(req.params.id);
     if (!quiz) {
       res.status(404).send("Not Found");
     }
-    //Allow deletion only if userr owns this note
+    //Allow deletion only if userr owns this quiz
     if (quiz.user.toString() !== req.user.id) {
       //if not authenticated user
       return res.status(401).send("Not Allowed");
     }
     quiz = await Quiz.findByIdAndDelete(req.params.id);
-    res.json({ Success: "Note has been deleted" });
+    res.json({ Success: "Quiz has been deleted" });
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Internal Server Error");
