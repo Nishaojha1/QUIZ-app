@@ -4,19 +4,33 @@ import React from "react";
 const Game = (props) => {
 const { quiz } = props;
 var [value, setValue] = useState("")
-var [score, setScore] = useState(0)
+// var [score, setScore] = useState(0)
+var score=0;
+window.val = 0;
+var flag=0;
 
 const addScore = () => {
-    if(value == quiz.answer){
-        setScore(score=1);
+    if(value == quiz.answer && flag == 0 ){
+       score=1 
+        window.val = window.val + score;
+        flag = 1;
+    }
+    else if(flag==1 && value != quiz.answer){
+        window.val = window.val - 1;
+        flag=0;
     }
     else{
-        setScore(score=0)
+       score=0
     }
     console.log(score, typeof score);
+    console.log(window.val);
+
+    sessionStorage.setItem("val", window.val);
 }
 
 
+
+// sessionStorage.setItem(window.val);
   return (
     <div>
     <form method="GET">
@@ -48,7 +62,7 @@ const addScore = () => {
                     id={quiz.option2}
                     name={quiz.question}
                     value= {quiz.option2}
-                    onClick={()=> {value=quiz.option2; console.log(value)}}
+                    onClick={()=> {value=quiz.option2; console.log(value); addScore();}}
                   />
                   <label className="form-check-label" for="flexRadioDefault2">
                     {quiz.option2}
@@ -63,7 +77,7 @@ const addScore = () => {
                     id={quiz.option3}
                     name={quiz.question}
                     value= {quiz.option3}
-                    onClick={()=> {value=quiz.option3; console.log(value)}}
+                    onClick={()=> {value=quiz.option3; console.log(value); addScore();}}
                   />
                   <label className="form-check-label" for="flexRadioDefault2">
                     {quiz.option3}
@@ -78,7 +92,7 @@ const addScore = () => {
                     id={quiz.option4}
                     name={quiz.question}
                     value= {quiz.option4}
-                    onClick={()=> {value=quiz.option4; console.log(value)}}
+                    onClick={()=> {value=quiz.option4; console.log(value); addScore();}}
                   />
                   <label className="form-check-label" for="flexRadioDefault2">
                     {quiz.option4}

@@ -10,6 +10,15 @@ const PlayQuizEntry = () => {
   const quizsInitial = []
   const [quizs, setQuizs] = useState(quizsInitial)
 
+  var [val, setVal] = useState('')
+
+
+  // var TEST = localStorage.getItem("val");
+
+  // var windowsvariable = sessionStorage.getItem(window.val);
+
+
+
   const handleChange = (event) => {
     setMessage(event.target.value);
   };
@@ -31,9 +40,23 @@ const PlayQuizEntry = () => {
     console.log(json, "FETCH");
     setSeq('1')
     setQuizs(json)
+    // localStorage.setItem("val", 0);
+    const disableBtn=()=> {
+      document.getElementById('btn2').disabled = true;
+    }
+    disableBtn();
   }
 
   console.log(seq);
+
+  const myFunction = () =>{
+    console.log(sessionStorage.getItem("val"))
+    setVal(sessionStorage.getItem("val"))
+    const disableBtn=()=> {
+      document.getElementById('btn').disabled = true;
+    }
+    disableBtn();
+  }
 
 
   return (
@@ -51,7 +74,7 @@ const PlayQuizEntry = () => {
 
       {/* <h2>Updated: {updated}</h2> */}
 
-      <button onClick={fetchallquiz}>Play</button>
+      <button className='btn btn-primary' id="btn2" onClick={fetchallquiz}>Play</button>
     </div>
 
     {quizs.map((quiz) => {
@@ -61,8 +84,14 @@ const PlayQuizEntry = () => {
           );
     })}
   
-    <button className={seq=='1' ? 'btn btn-primary' : 'd-none'}> SUBMIT </button>
-      
+    <button className={seq=='1' ? 'btn btn-primary mx-2' : 'd-none mx-2' } id="btn" onClick={myFunction}>  GENERATE SCORE </button>
+    
+    <div className={seq=='1' ? 'd-flex' : 'd-none' }> Your Score is : {val} </div>
+  
+    {/* <button >GENERATE SCORE</button>  */}
+    <div>
+    <a href="http://localhost:8000/playquiz" class="btn btn-danger my-2" tabIndex="-1" role="button">RESET</a>
+    </div>
     </div>
   )
 }
