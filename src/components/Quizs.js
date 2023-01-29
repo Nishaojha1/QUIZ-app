@@ -1,12 +1,11 @@
 import React, {useEffect, useRef, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import noteContext from "../context/notes/noteContext";
 import quizContext from "../context/quizs/quizContext";
 import AddQuiz from "./AddQuiz";
 import Quizitem from "./QuizItem";
 
 
-const Notes = (props) => {
+const Quizs = (props) => {
 
   const context = useContext(quizContext);
   const { quizs, getQuizs, editQuiz} = context;
@@ -25,7 +24,7 @@ const Notes = (props) => {
   const ref = useRef(null);
   const refClose = useRef(null);
 
-  const [quiz, setQuiz] = useState({id:"", equestion: "", eoption1: "", eanswer: ""})
+  const [quiz, setQuiz] = useState({id:"", equestion: "", eoption1: "",eoption2: "",eoption3: "",eoption4: "", eanswer: "", user: ""})
 
   const updateQuiz = (currentQuiz) => {
     ref.current.click();
@@ -198,8 +197,9 @@ const Notes = (props) => {
           );
         })}
       </div>
+      
     </>
   );
 };
 
-export default Notes;
+export default Quizs;

@@ -28,7 +28,12 @@ const { deleteQuiz } = context;
           <div className="row my-1">
             <div className="col">Answer is : {quiz.answer}</div>
           </div>
-          
+          <div className="row my-1">
+            <div className="col">Is the question type MCQ : {quiz.mcq}</div>
+          </div>
+          <div className="row my-1">
+            <div className="col">Title : {quiz.title}</div>
+          </div>
           <i className="fa-solid fa-trash mx-2" onClick={()=>{deleteQuiz(quiz._id); props.showAlert("deleted successfully","success")}}></i>
           <i className="fa-solid fa-file-pen mx-2" onClick={()=>{updateQuiz(quiz)}}></i>
         </div>

@@ -32,6 +32,19 @@ const QuizSchema = new Schema({
         required: true,
         
     },
+    title: {
+        type: String,
+        required: true,
+    },
+    mcq: {
+        type: String,
+        required: true,
+    },
+    code:{
+        type: String,
+        required: true,
+        default: "test"
+    },
     date: {
         type: Date,
         default: Date.now
